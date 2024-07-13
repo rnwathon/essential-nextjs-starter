@@ -1,3 +1,121 @@
 {
-  "extends": "next/core-web-vitals"
+  // JS File Config
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "endOfLine": "auto"
+      }
+    ]
+  },
+  "overrides": [
+    // TS File Config
+    {
+      "files": ["**/*.ts", "**/*.tsx", "**/*.mts"],
+      "plugins": [
+        "@typescript-eslint",
+        "unused-imports",
+        "tailwindcss",
+        "simple-import-sort"
+      ],
+      "extends": [
+        "next/core-web-vitals",
+        "plugin:tailwindcss/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "singleQuote": true,
+            "endOfLine": "auto"
+          }
+        ],
+
+        "import/extensions": "off",
+        "import/prefer-default-export": "off",
+        "import/order": "off",
+        "unused-imports/no-unused-imports": "warn",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          { "argsIgnorePattern": "^_" }
+        ],
+        "simple-import-sort/exports": "warn",
+        "simple-import-sort/imports": [
+          "warn",
+          {
+            "groups": [
+              ["^@?\\w", "^\\u0000"],
+              ["^@/data", "^@/constant"],
+              ["^@/lib", "^@/hooks", "^@/providers"],
+              ["^@/components"],
+              ["^@/"],
+              [
+                "^\\./?$",
+                "^\\.(?!/?$)",
+                "^\\.\\./?$",
+                "^\\.\\.(?!/?$)",
+                "^\\.\\./\\.\\./?$",
+                "^\\.\\./\\.\\.(?!/?$)",
+                "^\\.\\./\\.\\./\\.\\./?$",
+                "^\\.\\./\\.\\./\\.\\.(?!/?$)"
+              ], // relative paths up to 3 level
+              ["^"] // other
+            ]
+          }
+        ],
+
+        "react/destructuring-assignment": "off",
+        "react/require-default-props": "off",
+        "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/comma-dangle": "off",
+        "@typescript-eslint/consistent-type-imports": "error",
+        "@typescript-eslint/no-unused-vars": "off",
+
+        "tailwindcss/no-custom-classname": "off",
+
+        "no-restricted-syntax": [
+          "error",
+          "ForInStatement",
+          "LabeledStatement",
+          "WithStatement"
+        ]
+      }
+    },
+
+    // Tailwind Config
+    {
+      "files": ["tailwind.config.ts"],
+      "rules": {
+        "global-require": 0,
+
+        "import/no-extraneous-dependencies": [
+          "off",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    },
+
+    // Storybook Config
+    {
+      "files": ["*.stories.*"],
+      "extends": ["plugin:storybook/recommended"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    }
+  ]
 }
